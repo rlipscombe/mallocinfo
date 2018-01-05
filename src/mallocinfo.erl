@@ -1,5 +1,5 @@
 -module(mallocinfo).
--export([info/0]).
+-export([info/1]).
 -define(NOT_LOADED, not_loaded(?LINE)).
 -compile([no_native]).
 -on_load(on_load/0).
@@ -13,5 +13,5 @@ on_load() ->
 not_loaded(Line) ->
     erlang:nif_error({not_loaded, [{module, ?MODULE}, {line, Line}]}).
 
-info() ->
+info(_Path) ->
     ?NOT_LOADED.

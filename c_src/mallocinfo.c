@@ -1,5 +1,6 @@
 #include "erl_nif.h"
 #include <stdio.h>
+#include <linux/limits.h>
 #include <malloc.h>
 #include <errno.h>
 
@@ -15,10 +16,19 @@ static int on_load(ErlNifEnv *env, void **priv, ERL_NIF_TERM info)
 
 static ERL_NIF_TERM info(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
 {
+    char path[PATH_MAX];
     int options = 0;    // must be zero
     FILE *stream;
 
-    stream = fopen("mallocinfo.xml", "w");
+    if (argc != 1) {
+        return enif_make_badarg(env);
+    }
+
+    if (enif_get_string(env, argv[0], path, PATH_MAX, ERL_NIF_LATIN1) <= 0) {
+        return enif_make_badarg(env);
+    }
+
+    stream = fopen(path, "w");
     if (!stream) {
         return enif_make_tuple2(env, a_error, enif_make_int(env, errno));
     }
@@ -37,7 +47,7 @@ static ERL_NIF_TERM info(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
 
 static ErlNifFunc funcs[] =
 {
-    {"info", 0, info}
+    {"info", 1, info}
 };
 
 ERL_NIF_INIT(mallocinfo, funcs, on_load, NULL, NULL, NULL)

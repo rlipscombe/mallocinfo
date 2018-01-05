@@ -25,5 +25,5 @@ A NIF that calls [malloc_info(3)](http://man7.org/linux/man-pages/man3/malloc_in
 
     1> code:add_path("/home/user/mallocinfo/ebin").
     {module,mallocinfo}.
-    2> mallocinfo:info().
-    {error,13}
+    2> mallocinfo:info("/tmp/mallocinfo.xml").
+    ok
