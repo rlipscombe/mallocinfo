@@ -1,9 +1,7 @@
-mallocinfo
-=====
+# mallocinfo
 
-An OTP library
+A NIF that calls [malloc_info(3)](http://man7.org/linux/man-pages/man3/malloc_info.3.html).
 
-Build
------
+## Build
 
     $ rebar3 compile
