@@ -16,9 +16,7 @@ A NIF that calls [malloc_info(3)](http://man7.org/linux/man-pages/man3/malloc_in
 
 ## Injecting into a running node
 
-    $ tar -cvzh -f mallocinfo.tar.gz \
-            -C _build/default/lib \
-            mallocinfo/ebin mallocinfo/priv
+    $ make tarball
     $ scp mallocinfo.tar.gz otherhost:.
 
 
