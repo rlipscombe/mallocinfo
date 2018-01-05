@@ -2,6 +2,15 @@
 
 A NIF that calls [malloc_info(3)](http://man7.org/linux/man-pages/man3/malloc_info.3.html).
 
+## Background
+
+We're seeing our Erlang nodes use up more and more memory. Our current
+suspicion is that it's caused not by Erlang heap fragmentation, but by libc
+heap fragmentation caused by a NIF.
+
+This NIF can be loaded into a running Erlang node and will dump the libc heap
+information to an XML file.
+
 ## Build
 
     $ rebar3 compile
