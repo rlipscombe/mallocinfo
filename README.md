@@ -36,9 +36,13 @@ On `otherhost`:
     $ bin/blah remote_console
 
     1> code:add_path("/home/user/mallocinfo/ebin").
+    true
+    2> l(mallocinfo).
     {module,mallocinfo}.
-    2> mallocinfo:info("/tmp/mallocinfo.xml").
+    3> mallocinfo:info("/tmp/mallocinfo.xml").
     ok
+
+Press Ctrl+C twice to disconnect the remote console.
 
 ## Inspecting the output
 
