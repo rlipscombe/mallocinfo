@@ -42,9 +42,31 @@ On `otherhost`:
     3> mallocinfo:info("/tmp/mallocinfo.xml").
     ok
 
+Alternatively:
+
+    3> mallocinfo:stats().
+
+The output from that goes to standard error, so where it ultimately ends up
+depends on your environment. At Electric Imp, we use `logger` to forward it to
+syslog.
+
 Press Ctrl+C twice to disconnect the remote console.
 
-## Inspecting the output
+## Inspecting the stats output
+
+`mallocinfo:stats/0` calls `malloc_stats()`, which prints allocator statistics
+to standard error. It looks something like this:
+
+    Arena 0:
+    system bytes     =     303104
+    in use bytes     =     301488
+    Arena 1:
+    system bytes     =  103809024
+    in use bytes     =   98866320
+
+...etc.
+
+## Inspecting the XML output
 
 You'll need a couple of packages first:
 
@@ -55,3 +77,11 @@ Locally:
     $ scp otherhost:/tmp/mallocinfo.xml .
 
     $ xmllint --format mallocinfo.xml | pygmentize -l xml | less -R
+
+The interesting values are:
+
+    <total type="fast" count="93" size="8752"/>
+    <total type="rest" count="113379" size="4977315"/>
+    <system type="current" size="108421120"/>
+
+`current` corresponds to `system bytes`; `current - (fast + rest)` corresponds to `in use bytes`.

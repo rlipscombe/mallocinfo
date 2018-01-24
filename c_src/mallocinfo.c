@@ -45,9 +45,16 @@ static ERL_NIF_TERM info(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
     return result;
 }
 
+static ERL_NIF_TERM stats(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
+{
+    malloc_stats();
+    return a_ok;
+}
+
 static ErlNifFunc funcs[] =
 {
-    {"info", 1, info}
+    {"info", 1, info},
+    {"stats", 0, stats}
 };
 
 ERL_NIF_INIT(mallocinfo, funcs, on_load, NULL, NULL, NULL)
