@@ -20,7 +20,9 @@ information to an XML file.
     ERL_LIBS=_build/default/lib erl
     1> l(mallocinfo).
     {module,mallocinfo}
-    2> mallocinfo:info().
+    2> mallocinfo:info("/tmp/mallocinfo.xml").
+    ok
+    3> mallocinfo:stats().
     ok
 
 ## Injecting into a running node
@@ -45,10 +47,11 @@ On `otherhost`:
 Alternatively:
 
     3> mallocinfo:stats().
+    ok
 
-The output from that goes to standard error, so where it ultimately ends up
-depends on your environment. At Electric Imp, we use `logger` to forward it to
-syslog.
+The output from `mallocinfo:stats/0` goes to standard error, so where it
+ultimately ends up depends on your environment. At Electric Imp, we use
+`logger` to forward it to syslog.
 
 Press Ctrl+C twice to disconnect the remote console.
 
@@ -84,4 +87,5 @@ The interesting values are:
     <total type="rest" count="113379" size="4977315"/>
     <system type="current" size="108421120"/>
 
-`current` corresponds to `system bytes`; `current - (fast + rest)` corresponds to `in use bytes`.
+`current` corresponds to `system bytes`; `current - (fast + rest)` corresponds
+to `in use bytes`.
