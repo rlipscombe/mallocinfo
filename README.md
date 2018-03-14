@@ -13,7 +13,7 @@ information to an XML file.
 
 ## Build
 
-    $ rebar3 compile
+    $ make
 
 ## Run
 
